@@ -11,14 +11,12 @@ import routes from "./config/routes";
 import { auth } from "./service/Firebase";
 import logging from "./config/logging";
 import AuthRoute from "./components/AuthRoute";
-import { LinearProgress } from "@material-ui/core";
 import { useStyles } from './App.styles';
 
 const App = () => {
   const classes = useStyles();
   const [products, setProducts] = React.useState<ProductItemType[]>([]);
   const [cartItems, setCartItems] = React.useState([] as ProductItemType[]);
-  const [loading, setLoading] = React.useState<boolean>(true);
   const { data, isLoading, error } = useQuery<ProductItemType[]>(
     'products',
     getProducts
@@ -37,7 +35,6 @@ const App = () => {
       else {
         logging.info('No user detected');
       }
-      setLoading(false);
     })
   }, []);
 
@@ -75,7 +72,7 @@ const App = () => {
     ));
   };
 
-  if (loading) return <LinearProgress />;
+  // if (loading) return <LinearProgress />;
 
   return (
     <div className={classes.root}>

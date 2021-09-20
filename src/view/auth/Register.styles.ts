@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             marginTop: '24px',
         },
         card: {
-            marginTop: 70,
+            marginTop: '20%',
         },
         title: { textAlign: 'center' },
         successMessage: { color: 'green' },

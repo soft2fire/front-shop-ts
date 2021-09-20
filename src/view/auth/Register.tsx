@@ -1,30 +1,32 @@
 import React, { useState } from 'react'
-import { Grid, TextField, Button, Card, CardContent } from '@material-ui/core'
+import { Grid, TextField, Button, Card, CardContent, Chip } from '@material-ui/core'
 import { Formik, Form, FormikProps } from 'formik'
 import * as Yup from 'yup'
 import { useStyles } from './Register.styles'
 import { auth } from '../../service/Firebase'
-// import { useHistory } from 'react-router'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useHistory } from 'react-router'
+import LinkSession from '../../components/elements/LinkSession'
 
-interface ISignUpForm {
+interface SignUpForm {
     fullName: string
     password: string
     confirmPassword: string
     email: string
 }
 
-interface IFormStatus {
+interface FormStatus {
     message: string
     type: string
 }
 
-interface IFormStatusProps {
-    [key: string]: IFormStatus
+interface FormStatusProps {
+    [key: string]: FormStatus
 }
 
-const formStatusProps: IFormStatusProps = {
+const formStatusProps: FormStatusProps = {
     success: {
-        message: 'Signed up successfully.',
+        message: 'Signed up successfully. please wait,you redirect to login page be soon',
         type: 'success',
     },
     duplicate: {
@@ -38,24 +40,27 @@ const formStatusProps: IFormStatusProps = {
 }
 
 const Register: React.FunctionComponent = () => {
-    // const history = useHistory();
+    const history = useHistory();
     const classes = useStyles()
     const [displayFormStatus, setDisplayFormStatus] = useState(false)
-    const [formStatus, setFormStatus] = useState<IFormStatus>({
+    const [formStatus, setFormStatus] = useState<FormStatus>({
         message: '',
         type: '',
     })
 
-    const createNewUser = async (data: ISignUpForm, resetForm: Function) => {
-        
+    const createNewUser = async (data: SignUpForm, resetForm: Function) => {
+
         auth.createUserWithEmailAndPassword(data.email, data.password)
             .then(() => {
                 if (data) {
                     setFormStatus(formStatusProps.success)
                     resetForm({})
+                    setDisplayFormStatus(true)
                 }
-            })
-            .catch(error => {
+                setTimeout(() => {
+                    history.push('/login')
+                }, 3000)
+            }).catch((error) => {
                 const response = error;
                 if (response.code === 'auth/email-already-in-use') {
                     setFormStatus(formStatusProps.duplicate)
@@ -79,11 +84,11 @@ const Register: React.FunctionComponent = () => {
                             email: '',
                         }}
 
-                        onSubmit={(values: ISignUpForm, actions) => {
+                        onSubmit={(values: SignUpForm, actions) => {
                             createNewUser(values, actions.resetForm)
                             setTimeout(() => {
                                 actions.setSubmitting(false)
-                            }, 1000)
+                            }, 1500)
                         }}
 
                         validationSchema={Yup.object().shape({
@@ -100,7 +105,7 @@ const Register: React.FunctionComponent = () => {
                                 ),
                         })}
                     >
-                        {(props: FormikProps<ISignUpForm>) => {
+                        {(props: FormikProps<SignUpForm>) => {
                             const { values, touched, errors, handleBlur, handleChange, isSubmitting, } = props
                             return (
                                 <Form>
@@ -119,6 +124,14 @@ const Register: React.FunctionComponent = () => {
                                                     ? true
                                                     : false
                                                 }
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            />
+                                        </Grid>
+                                        <Grid item lg={11} md={11} sm={11} xs={11} className={classes.textField} >
+                                            <TextField name="email" id="email" label="Email-id" value={values.email} type="email" variant="filled"
+                                                helperText={errors.email && touched.email ? errors.email : 'Enter email-id'}
+                                                error={errors.email && touched.email ? true : false}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                             />
@@ -143,19 +156,17 @@ const Register: React.FunctionComponent = () => {
                                                 onBlur={handleBlur}
                                             />
                                         </Grid>
-                                        <Grid item lg={11} md={11} sm={11} xs={11} className={classes.textField} >
-                                            <TextField name="email" id="email" label="Email-id" value={values.email} type="email" variant="filled"
-                                                helperText={errors.email && touched.email ? errors.email : 'Enter email-id'}
-                                                error={errors.email && touched.email ? true : false}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            />
-                                        </Grid>
 
                                         <Grid item lg={11} md={11} sm={11} xs={11} className={classes.submitButton}  >
-                                            <Button type="submit" variant="contained" color="secondary" disabled={isSubmitting}  >
-                                                Submit
-                                            </Button>
+                                            <Grid item container justifyContent="space-between">
+                                                <Button type="submit" variant="contained" color="secondary" disabled={isSubmitting}  >
+                                                    Register
+                                                </Button>
+                                                <LinkSession link="/login">
+                                                    <Chip clickable variant="outlined" label="Login" icon={<AccountCircleIcon />} />
+                                                </LinkSession>
+                                            </Grid>
+
                                             {displayFormStatus && (
                                                 <div className="formStatus">
                                                     {

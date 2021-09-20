@@ -4,8 +4,7 @@ const drawerWidth = 200;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            display: 'flex',
-            marginBottom: 60,
+            marginBottom: 64,
         },
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
@@ -25,13 +24,15 @@ const useStyles = makeStyles((theme: Theme) =>
         menuButton: {
             marginRight: 30,
         },
+        bottomItem: {
+            height: '100%',
+        },
         hide: {
             display: 'none',
         },
         link: {
             textDecoration: "none",
             color: theme.palette.type
-
         },
         drawer: {
             width: drawerWidth,
@@ -68,45 +69,4 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-// const useStyles = makeStyles((theme: Theme) =>
-//     createStyles({
-//         grow: {
-//             flexGrow: 1,
-//         },
-//         menuButton: {
-//             marginRight: theme.spacing(2),
-//         },
-//         title: {
-//             display: 'none',
-//             [theme.breakpoints.up('sm')]: {
-//                 display: 'block',
-//             },
-//         },
-//         inputRoot: {
-//             color: 'inherit',
-//         },
-//         inputInput: {
-//             padding: theme.spacing(1, 1, 1, 0),
-//             // vertical padding + font size from searchIcon
-//             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-//             transition: theme.transitions.create('width'),
-//             width: '100%',
-//             [theme.breakpoints.up('md')]: {
-//                 width: '20ch',
-//             },
-//         },
-//         sectionDesktop: {
-//             display: 'none',
-//             [theme.breakpoints.up('md')]: {
-//                 display: 'flex',
-//             },
-//         },
-//         sectionMobile: {
-//             display: 'flex',
-//             [theme.breakpoints.up('md')]: {
-//                 display: 'none',
-//             },
-//         },
-//     }),
-// );
 export default useStyles;

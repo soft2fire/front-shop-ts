@@ -2,24 +2,32 @@ import React from 'react';
 import clsx from 'clsx';
 import {
     Drawer, AppBar, Toolbar, List, CssBaseline, Typography,
-    Divider, IconButton, ListItem, ListItemIcon, ListItemText, Badge, useTheme
+    Divider, IconButton, ListItem, ListItemIcon, ListItemText, Badge, useTheme, Grid,
 } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PaymentIcon from '@material-ui/icons/Payment';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import AppsIcon from '@material-ui/icons/Apps';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useChangeTheme } from '../../../reducer/ThemeReducer';
 import LinkSession from '../../elements/LinkSession';
 import StoreContextProvider from '../../../reducer/StoreReducer';
 import useStyles from './LeftBar.style';
+import { auth } from "../../../service/Firebase";
+import { useHistory } from 'react-router'
+import logging from '../../../config/logging';
 
 export default function LeftBar() {
     const classes = useStyles();
     const theme = useTheme();
+    const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const changeTheme = useChangeTheme();
     const { cartItems } = React.useContext(StoreContextProvider);
@@ -32,6 +40,11 @@ export default function LeftBar() {
         setOpen(false);
     };
 
+    const Logout = () => {
+        auth.signOut()
+            .then(() => history.push('/login'))
+            .catch(error => logging.error(error));
+    }
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -74,26 +87,52 @@ export default function LeftBar() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    <ListItem button>
-                        <ListItemIcon onClick={() => changeTheme()}>
-                            {theme.palette.type === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
-                        </ListItemIcon>
-                        <ListItemText onClick={() => changeTheme()} primary="Toggle Theme" />
-                    </ListItem>
-                </List>
-                <Divider />
-                <LinkSession link="/shop">
-                    <List>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <AddShoppingCartIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="shop" />
-                        </ListItem>
-                    </List>
-                </LinkSession>
-                <List>
+                <Grid container direction="column" justifyContent="space-between" className={classes.bottomItem}>
+                    <Grid item>
+                        <List>
+                            <ListItem button>
+                                <ListItemIcon onClick={() => changeTheme()}>
+                                    {theme.palette.type === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+                                </ListItemIcon>
+                                <ListItemText onClick={() => changeTheme()} primary="Toggle Theme" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            {[{ name: 'Home Page', link: '/home', icon: <AppsIcon /> },
+                            { name: 'Shop', link: '/shop', icon: <AddShoppingCartIcon /> },
+                            { name: 'Invoice', link: '/invoice', icon: <PaymentIcon /> },
+                            ].map((item) => (
+                                <LinkSession link={item.link}>
+                                    <ListItem button key={item.name}>
+                                        <ListItemIcon>{item.icon}</ListItemIcon>
+                                        <ListItemText primary={item.name} />
+                                    </ListItem>
+                                </LinkSession>
+                            ))}
+                        </List>
+                    </Grid>
+                    <Grid item>
+                        {auth.currentUser ?
+                            <ListItem button>
+                                <ListItemIcon onClick={() => Logout()}>
+                                    <ExitToAppIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Logout" />
+                            </ListItem>
+                            :
+                            <LinkSession link="/login">
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <VpnKeyIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="login" />
+                                </ListItem>
+                            </LinkSession>
+                        }
+                    </Grid>
+                </Grid>
+                {/*  <List>
                     <LinkSession link='/invoice'>
                         <ListItem button>
                             <ListItemIcon>
@@ -101,40 +140,10 @@ export default function LeftBar() {
                                     <PaymentIcon />
                                 </Badge>
                             </ListItemIcon>
-
                             <ListItemText primary="Invoice" />
                         </ListItem>
                     </LinkSession>
-                </List>
-                <List>
-                    <LinkSession link='/Home'>
-                        <ListItem button>
-                            <ListItemIcon >
-                                <Brightness4Icon />
-                            </ListItemIcon>
-                            <ListItemText primary="Home page" />
-                        </ListItem>
-                    </LinkSession>
-                </List>
-
-                {/* <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
                 </List> */}
-                <Divider />
-                <List>
-                    {['user', 'notification', 'profile'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-
             </Drawer>
         </div>
     );

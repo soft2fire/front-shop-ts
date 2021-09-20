@@ -20,7 +20,7 @@ const routes: IRoute[] = [
         exact: true,
         component: Home,
         name: 'Home Page',
-        protected: true
+        protected: false
     },
     {
         path: '/Shop',
@@ -48,7 +48,7 @@ const routes: IRoute[] = [
         exact: true,
         component: Register,
         name: 'Register Page',
-        protected: true
+        protected: false
     },
     {
         path: '/Login',
