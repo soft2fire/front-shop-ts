@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import {
     Drawer, AppBar, Toolbar, List, CssBaseline, Typography,
-    Divider, IconButton, ListItem, ListItemIcon, ListItemText, useTheme, Grid,
+    Divider, IconButton, ListItem, ListItemIcon, ListItemText, useTheme, Grid, Badge,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -15,7 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useChangeTheme } from '../../../reducer/ThemeReducer';
 import LinkSession from '../../elements/LinkSession';
-// import StoreContextProvider from '../../../reducer/StoreReducer';
+import StoreContextProvider from '../../../reducer/StoreReducer';
 import useStyles from './LeftBar.style';
 import { auth } from "../../../service/Firebase";
 import { useHistory } from 'react-router'
@@ -27,7 +27,7 @@ export default function LeftBar() {
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const changeTheme = useChangeTheme();
-    // const { cartItems } = React.useContext(StoreContextProvider);
+    const { cartItems } = React.useContext(StoreContextProvider);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -86,19 +86,17 @@ export default function LeftBar() {
                 <Divider />
                 <Grid container direction="column" justifyContent="space-between" className={classes.bottomItem}>
                     <Grid item>
-                        <List>
-                            <ListItem button>
-                                <ListItemIcon onClick={() => changeTheme()}>
-                                    {theme.palette.type === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
-                                </ListItemIcon>
-                                <ListItemText onClick={() => changeTheme()} primary="Toggle Theme" />
-                            </ListItem>
-                        </List>
+                        <ListItem button>
+                            <ListItemIcon onClick={() => changeTheme()}>
+                                {theme.palette.type === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+                            </ListItemIcon>
+                            <ListItemText onClick={() => changeTheme()} primary="Toggle Theme" />
+                        </ListItem>
                         <Divider />
                         <List>
                             {[{ name: 'Home Page', link: '/home', icon: <AppsIcon /> },
                             { name: 'Shop', link: '/shop', icon: <AddShoppingCartIcon /> },
-                            { name: 'Invoice', link: '/invoice', icon: <PaymentIcon /> },
+                                // { name: 'Invoice', link: '/invoice', icon: <PaymentIcon /> },
                             ].map((item) => (
                                 <LinkSession link={item.link}>
                                     <ListItem button key={item.name}>
@@ -108,6 +106,18 @@ export default function LeftBar() {
                                 </LinkSession>
                             ))}
                         </List>
+                        {/* <List> */}
+                        <LinkSession link='/invoice'>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Badge badgeContent={cartItems.length} color='error'>
+                                        <PaymentIcon />
+                                    </Badge>
+                                </ListItemIcon>
+                                <ListItemText primary="Invoice" />
+                            </ListItem>
+                        </LinkSession>
+                        {/* </List> */}
                     </Grid>
                     <Grid item>
                         {auth.currentUser ?
@@ -129,18 +139,7 @@ export default function LeftBar() {
                         }
                     </Grid>
                 </Grid>
-                {/*  <List>
-                    <LinkSession link='/invoice'>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <Badge badgeContent={cartItems.length} color='error'>
-                                    <PaymentIcon />
-                                </Badge>
-                            </ListItemIcon>
-                            <ListItemText primary="Invoice" />
-                        </ListItem>
-                    </LinkSession>
-                </List> */}
+
             </Drawer>
         </div>
     );

@@ -25,7 +25,7 @@ interface FormStatusProps {
 
 const formStatusProps: FormStatusProps = {
     success: {
-        message: 'Signed In successfully.',
+        message: 'Signed In successfully we redirected you to shop',
         type: 'success',
     },
     error: {
@@ -52,7 +52,7 @@ const Login: React.FunctionComponent = () => {
                 }
                 setTimeout(() => {
                     history.push('/shop')
-                }, 1500)
+                }, 1000)
             })
             .catch(error => {
                 const response = error;
@@ -61,7 +61,7 @@ const Login: React.FunctionComponent = () => {
                 }
                 setDisplayFormStatus(true)
             }
-            )
+        )
     }
 
     return (
