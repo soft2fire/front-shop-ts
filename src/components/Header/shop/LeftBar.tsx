@@ -2,15 +2,12 @@ import React from 'react';
 import clsx from 'clsx';
 import {
     Drawer, AppBar, Toolbar, List, CssBaseline, Typography,
-    Divider, IconButton, ListItem, ListItemIcon, ListItemText, Badge, useTheme, Grid,
+    Divider, IconButton, ListItem, ListItemIcon, ListItemText, useTheme, Grid,
 } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PaymentIcon from '@material-ui/icons/Payment';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import AppsIcon from '@material-ui/icons/Apps';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
@@ -18,7 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useChangeTheme } from '../../../reducer/ThemeReducer';
 import LinkSession from '../../elements/LinkSession';
-import StoreContextProvider from '../../../reducer/StoreReducer';
+// import StoreContextProvider from '../../../reducer/StoreReducer';
 import useStyles from './LeftBar.style';
 import { auth } from "../../../service/Firebase";
 import { useHistory } from 'react-router'
@@ -30,7 +27,7 @@ export default function LeftBar() {
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const changeTheme = useChangeTheme();
-    const { cartItems } = React.useContext(StoreContextProvider);
+    // const { cartItems } = React.useContext(StoreContextProvider);
 
     const handleDrawerOpen = () => {
         setOpen(true);
