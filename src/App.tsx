@@ -1,24 +1,18 @@
-import Home from "./view/Home";
-import Shop from './view/Shop';
-import { useStyles } from './App.styles';
-import DetailProduct from "./components/products/DetailProduct";
+import React from 'react';
 import {
   BrowserRouter as Router, Switch, Route, RouteComponentProps
 } from "react-router-dom";
-import React from 'react';
 import { ProductItemType } from "./components/types";
-import Invoice from "./view/Invoices";
 import StoreContextProvider from "./reducer/StoreReducer";
 import { useQuery } from 'react-query'
 import { getProducts } from "./service/api";
 import LeftBar from "./components/Header/shop/LeftBar";
-import Register from "./view/auth/Register";
 import routes from "./config/routes";
 import { auth } from "./service/Firebase";
 import logging from "./config/logging";
 import AuthRoute from "./components/AuthRoute";
 import { LinearProgress } from "@material-ui/core";
-// import { LinearProgress } from "@material-ui/core";
+import { useStyles } from './App.styles';
 
 const App = () => {
   const classes = useStyles();
