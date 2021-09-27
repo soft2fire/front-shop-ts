@@ -4,6 +4,7 @@ import Login from "../view/auth/Login";
 import Register from "../view/auth/Register";
 import Home from "../view/Home";
 import Invoice from "../view/Invoices";
+import Profile from "../view/Profile";
 import Shop from "../view/Shop";
 
 interface IRoute {
@@ -16,7 +17,7 @@ interface IRoute {
 
 const routes: IRoute[] = [
     {
-        path: '/Home',
+        path: '/home',
         exact: true,
         component: Home,
         name: 'Home Page',
@@ -30,14 +31,21 @@ const routes: IRoute[] = [
         protected: true
     },
     {
-        path: '/Invoice',
+        path: '/profile',
+        exact: true,
+        component: Profile,
+        name: 'profile Page',
+        protected: true
+    },
+    {
+        path: '/invoice',
         exact: true,
         component: Invoice,
         name: 'Invoice Page',
         protected: true
     },
     {
-        path: '/Product/:pageId',
+        path: '/product/:pageId',
         exact: true,
         component: DetailProduct,
         name: 'DetailProduct Page',

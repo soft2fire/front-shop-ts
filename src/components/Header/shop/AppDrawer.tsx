@@ -10,25 +10,26 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AppsIcon from '@material-ui/icons/Apps';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useChangeTheme } from '../../../reducer/ThemeReducer';
 import LinkSession from '../../elements/LinkSession';
 import StoreContextProvider from '../../../reducer/StoreReducer';
-import useStyles from './LeftBar.style';
-import { auth } from "../../../service/Firebase";
-import { useHistory } from 'react-router'
-import logging from '../../../config/logging';
+import useStyles from './AppDrawer.styles';
 
-export default function LeftBar() {
+export default function AppDrawer() {
     const classes = useStyles();
     const theme = useTheme();
-    const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const changeTheme = useChangeTheme();
-    const { cartItems } = React.useContext(StoreContextProvider);
-
+    const { cartItems, checkAuthUser, handleLogout } = React.useContext(StoreContextProvider);
+    const [userState, setUserState] = React.useState<string | null>('')
+    React.useEffect(() => {
+        setUserState(localStorage.getItem('userState'))
+    }, [userState])
+    console.log(checkAuthUser, 'user stage');
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -37,11 +38,6 @@ export default function LeftBar() {
         setOpen(false);
     };
 
-    const Logout = () => {
-        auth.signOut()
-            .then(() => history.push('/login'))
-            .catch(error => logging.error(error));
-    }
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -63,7 +59,8 @@ export default function LeftBar() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>My-Shop</Typography>
+                    
+                    <Typography variant="h6" noWrap>My-App</Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -92,11 +89,11 @@ export default function LeftBar() {
                             </ListItemIcon>
                             <ListItemText onClick={() => changeTheme()} primary="Toggle Theme" />
                         </ListItem>
-                        <Divider />
+                    <Divider />
                         <List>
                             {[{ name: 'Home Page', link: '/home', icon: <AppsIcon /> },
                             { name: 'Shop', link: '/shop', icon: <AddShoppingCartIcon /> },
-                                // { name: 'Invoice', link: '/invoice', icon: <PaymentIcon /> },
+                                { name: 'profile', link: '/profile', icon: <AccountBoxIcon /> },
                             ].map((item) => (
                                 <LinkSession link={item.link}>
                                     <ListItem button key={item.name}>
@@ -120,26 +117,25 @@ export default function LeftBar() {
                         {/* </List> */}
                     </Grid>
                     <Grid item>
-                        {auth.currentUser ?
-                            <ListItem button>
-                                <ListItemIcon onClick={() => Logout()}>
-                                    <ExitToAppIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Logout" />
-                            </ListItem>
-                            :
-                            <LinkSession link="/login">
+                        {
+                            checkAuthUser === true ?
                                 <ListItem button>
-                                    <ListItemIcon>
-                                        <VpnKeyIcon />
+                                    <ListItemIcon onClick={handleLogout}>
+                                        <ExitToAppIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="login" />
+                                    <ListItemText primary="Logout" />
                                 </ListItem>
-                            </LinkSession>
+                                : <LinkSession link="/login">
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <VpnKeyIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="login" />
+                                    </ListItem>
+                                </LinkSession>
                         }
                     </Grid>
                 </Grid>
-
             </Drawer>
         </div>
     );

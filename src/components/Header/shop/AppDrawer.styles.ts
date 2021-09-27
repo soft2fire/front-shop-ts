@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: 30,
         },
         bottomItem: {
-            height: '100%',
+            height: '99%',
         },
         hide: {
             display: 'none',

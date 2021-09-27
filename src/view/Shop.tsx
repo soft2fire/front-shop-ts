@@ -43,7 +43,7 @@ const Shop = () => {
 
   const LengthItem: string = getTotalItems(cartItems).toString();
 
-  if (isLoading) return <Backdrop className={classes.backdrop} open={isLoading} onClick={() => isLoading ? true : false}>
+  if (isLoading) return <Backdrop className={classes.backdrop} open={isLoading} onChange={() => isLoading ? true : false}>
     <CircularProgress color="inherit" />
   </Backdrop>;
   if (error) return <div>something went wrong...</div>

@@ -12,17 +12,14 @@ export const useStyles = makeStyles((theme: Theme) =>
     productSession: {
       marginTop: 4,
     },
-    paper: {
-      height: 140,
-      width: 100,
-    },
     control: {
       padding: theme.spacing(2),
     },
     fixedButton: {
       position: 'fixed',
       right: 8,
-      top: 70
+      zIndex:0,
+      top: 20
     }
   }),
 );

@@ -16,7 +16,7 @@ export const ProductInInvoice = ({ item, addToCart, removeFromCart }: ProductInI
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
+            <Paper elevation={3} className={classes.paper}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <CardMedia

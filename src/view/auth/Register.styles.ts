@@ -4,7 +4,6 @@ export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             maxWidth: '450px',
-            display: 'block',
             margin: '0 auto',
         },
         textField: {

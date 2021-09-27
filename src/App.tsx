@@ -6,16 +6,19 @@ import { ProductItemType } from "./components/types";
 import StoreContextProvider from "./reducer/StoreReducer";
 import { useQuery } from 'react-query'
 import { getProducts } from "./service/api";
-import LeftBar from "./components/Header/shop/LeftBar";
+import AppDrawer from "./components/Header/shop/AppDrawer";
 import routes from "./config/routes";
 import { auth } from "./service/Firebase";
 import logging from "./config/logging";
 import AuthRoute from "./components/AuthRoute";
+import { useHistory } from 'react-router'
 import { useStyles } from './App.styles';
 
 const App = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [products, setProducts] = React.useState<ProductItemType[]>([]);
+  const [checkAuthUser, setCheckAuthUser] = React.useState<boolean>(true);
   const [cartItems, setCartItems] = React.useState([] as ProductItemType[]);
   const { data, isLoading, error } = useQuery<ProductItemType[]>(
     'products',
@@ -30,17 +33,18 @@ const App = () => {
   React.useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) {
+        setCheckAuthUser(true)
         logging.info('User detected.');
       }
       else {
-        logging.info('No user detected');
+        setCheckAuthUser(false)
+        logging.warn('No user detected.');
       }
     })
   }, []);
 
   function handleAddToCart(clickedItem: ProductItemType) {
     setCartItems(prev => {
-
       const isExist = prev.find(item => item.id === clickedItem.id);
 
       if (isExist) {
@@ -71,7 +75,15 @@ const App = () => {
       }, [] as ProductItemType[])
     ));
   };
-
+  const handleLogout = () => {
+    auth.signOut()
+        .then(() => {
+            history.push('/login')
+            localStorage.setItem('userState', 'logout')
+        }
+        )
+        .catch(error => logging.error(error));
+}
   // if (loading) return <LinearProgress />;
 
   return (
@@ -84,10 +96,12 @@ const App = () => {
         isLoading,
         error,
         handleAddToCart,
-        handleRemoveCart
+        handleRemoveCart,
+        checkAuthUser,
+        handleLogout
       }}>
         <Router>
-          <LeftBar />
+          <AppDrawer />
           <Switch>
             {
               routes.map((route, index) =>
@@ -106,7 +120,6 @@ const App = () => {
           </Switch>
         </Router>
       </StoreContextProvider.Provider>
-      {/* <ReactQueryDevtools initialIsOpen /> */}
     </div>
   );
 }

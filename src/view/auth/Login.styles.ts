@@ -18,6 +18,9 @@ export const useStyles = makeStyles((theme: Theme) =>
         card: {
             marginTop: '25%',
         },
+        googleChip: {
+            marginTop: 8,
+        },
         title: { textAlign: 'center' },
         successMessage: { color: 'green' },
         errorMessage: { color: 'red' },

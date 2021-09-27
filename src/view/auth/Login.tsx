@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { Grid, TextField, Button, Card, CardContent, Chip } from '@material-ui/core'
+import { Grid, TextField, Button, Card, CardContent, Chip, Avatar } from '@material-ui/core'
 import { Formik, Form, FormikProps } from 'formik'
 import * as Yup from 'yup'
 import { useStyles } from './Login.styles'
-import { auth } from '../../service/Firebase'
+import { auth, Providers } from '../../service/Firebase'
 import LinkSession from '../../components/elements/LinkSession'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-
+import GTranslateIcon from '@material-ui/icons/GTranslate';
+import firebase from 'firebase/compat/app';
 import { useHistory } from 'react-router'
+import { SignInWithSocialMedia } from './modules'
 
 interface SignInForm {
     password: string
@@ -42,6 +44,45 @@ const Login: React.FunctionComponent = () => {
         message: '',
         type: '',
     })
+    const signInWithSocialMedia = async (provider: firebase.auth.AuthProvider) => {
+        SignInWithSocialMedia(provider)
+            .then(() => {
+                if (provider) {
+                    setFormStatus(formStatusProps.success)
+                    setDisplayFormStatus(true)
+                }
+                setTimeout(() => {
+                    history.push('/shop')
+                }, 3000)
+            }).catch((error) => {
+                const response = error;
+                if (response.code === 'auth/email-already-in-use') {
+                    setFormStatus(formStatusProps.duplicate)
+                } else {
+                    setFormStatus(formStatusProps.error)
+                }
+                setDisplayFormStatus(true)
+            }
+            )
+    }
+    // const signInWithSocialMedia = (provider: firebase.auth.AuthProvider) => {
+    //     SignInWithSocialMedia(provider)
+    //         .then((result) => {
+    //             setFormStatus(formStatusProps.success)
+    //             setDisplayFormStatus(true)
+    //             const user = result.user;
+    //             console.log(user);
+    //         }).catch((error) => {
+    //             const errorCode = error.code;
+    //             console.log(errorCode);
+    //             const errorMessage = error.message;
+    //             console.log(errorMessage);
+    //             const email = error.email;
+    //             console.log(email);
+    //             const credential = GoogleAuthProvider.credentialFromError(error);
+    //             console.log(credential);
+    //         });
+    // }
     const loginUser = async (data: SignInForm) => {
 
         auth.signInWithEmailAndPassword(data.email, data.password)
@@ -61,7 +102,7 @@ const Login: React.FunctionComponent = () => {
                 }
                 setDisplayFormStatus(true)
             }
-        )
+            )
     }
 
     return (
@@ -112,16 +153,18 @@ const Login: React.FunctionComponent = () => {
                                             />
                                         </Grid>
 
-                                        <Grid item lg={11} md={11} sm={11} xs={11} className={classes.submitButton} container
+                                        <Grid item lg={11} md={11} sm={11} xs={11} className={classes.submitButton}
                                             direction="column" >
-                                            <Grid item container justifyContent="space-between">
+                                            <Grid item container justifyContent="space-around">
                                                 <Button type="submit" variant="contained" color="secondary" disabled={isSubmitting}  >
                                                     Login
                                                 </Button>
+
                                                 <LinkSession link="/register">
                                                     <Chip clickable variant="outlined" label="create an account" icon={<AccountCircleIcon />} />
                                                 </LinkSession>
                                             </Grid>
+
                                             <Grid item justifyContent="space-between">
                                                 {displayFormStatus && (
                                                     <div className="formStatus">
@@ -137,12 +180,22 @@ const Login: React.FunctionComponent = () => {
                                             </Grid>
 
                                         </Grid>
-
+                                        <Chip
+                                            label="Sign In with Google"
+                                            color="primary"
+                                            deleteIcon={<GTranslateIcon />}
+                                            onClick={() => signInWithSocialMedia(Providers.google)}
+                                            avatar={<Avatar>G</Avatar>}
+                                            className={classes.googleChip}
+                                        />
                                     </Grid>
                                 </Form>
                             )
                         }}
                     </Formik>
+
+
+
                 </CardContent>
             </Card>
         </div>

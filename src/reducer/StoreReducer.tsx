@@ -12,7 +12,9 @@ export interface StoreContextData {
   cartDispatch?: CartAction;
   handleAddToCart: (clickedItem: ProductItemType) => void;
   handleResetCart: () => void;
+  handleLogout: () => void;
   handleRemoveCart: (id: number) => void;
+  checkAuthUser:boolean;
 }
 
 export const StoreContextDefaultValue: StoreContextData = {
@@ -20,8 +22,10 @@ export const StoreContextDefaultValue: StoreContextData = {
   cartItems: [],
   isLoading: false,
   error: false,
+  checkAuthUser:true,
   getProducts: () => null,
   handleAddToCart: () => { },
+  handleLogout: () => { },
   handleRemoveCart: () => { },
   handleResetCart: () => { },
 }

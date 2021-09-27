@@ -15,6 +15,8 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { Payment } from '@material-ui/icons';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinkSession from '../components/elements/LinkSession';
+
+
 const Invoice = () => {
 
     const { isLoading, cartItems, handleAddToCart, handleRemoveCart, handleResetCart } = React.useContext(StoreContextProvider);
@@ -23,7 +25,7 @@ const Invoice = () => {
         <CircularProgress color="inherit" />
     </Backdrop>;
     return (
-        <div className={classes.root}>
+        <div>
             <LinkSession link={'/shop'}>
                 <Button
                     className={classes.backButton}
@@ -38,9 +40,9 @@ const Invoice = () => {
                         direction="row"
                         justifyContent="space-around"
                         alignItems="flex-start" >
-                        <Grid container justifyContent="space-between" spacing={1} item xs={12}>
+                        <Grid container justifyContent="space-between" spacing={2} item xs={12}>
                             <Typography gutterBottom color="textSecondary" component="h2">
-                                <Payment style={{ fontSize: 40 }} />
+                                <Payment fontSize="large" />
                             </Typography>
                             <Chip
                                 label="Click for Empty Basket"
@@ -61,7 +63,7 @@ const Invoice = () => {
                                 ))
                             }
                         </Grid>
-                        <Grid xs={12} md={6}>
+                        <Grid xs={12} md={6} >
                             <Box boxShadow={5}>
                                 <Card>
                                     <CardContent >

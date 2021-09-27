@@ -70,7 +70,7 @@ function DetailProduct() {
                                     <Tooltip title="Add To Cart" placement="bottom" arrow>
                                         <Chip clickable
                                             icon={<MonetizationOnIcon />}
-                                            label={SingleProduct.price}
+                                            label={SingleProduct?.price}
                                             onDelete={() => { handleAddToCart(SingleProduct) }}
                                             onClick={() => { handleAddToCart(SingleProduct) }}
                                             deleteIcon={<ShoppingBasketIcon />}
