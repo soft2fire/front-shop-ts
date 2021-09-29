@@ -28,7 +28,7 @@ const Home = () => {
             </Accordion>
             <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography># 2security details </Typography>
+                    <Typography>#2 security details </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
