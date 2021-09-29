@@ -1,12 +1,12 @@
 import React from 'react';
 // import { useChangeTheme } from '../reducer/ThemeReducer';
-import useTheme from '@material-ui/core/styles/useTheme';
+// import useTheme from '@material-ui/core/styles/useTheme';
 import Typography from '@material-ui/core/Typography';
 import { Accordion, AccordionDetails, AccordionSummary } from './Home.styles';
 // import IAccordion from '../components/elements/Accordion';
 
 const Home = () => {
-    const theme = useTheme();
+    // const theme = useTheme();
     // const changeTheme = useChangeTheme();
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
