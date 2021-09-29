@@ -3,12 +3,14 @@ import Typography from '@material-ui/core/Typography';
 import { Accordion, AccordionDetails, AccordionSummary } from './elements.styles';
 
 
-// interface accordionProps {
-//     name:string,
-// }
-const Home = () => {
+interface accordionProps {
+    expandedId: string,
+    name: string,
+    descriptions: string
+}
+const IAccordion = ({ expandedId, name, descriptions }: accordionProps) => {
     // const changeTheme = useChangeTheme();
-    const [expanded, setExpanded] = React.useState<string | false>('panel1');
+    const [expanded, setExpanded] = React.useState<string | false>(expandedId);
 
     const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, newExpanded: boolean) => {
         setExpanded(newExpanded ? panel : false);
@@ -16,23 +18,24 @@ const Home = () => {
     // if (auth.currentUser?.providerData[0]?.providerId !== 'password') return <Redirect to='/login' />
     return (
         <div>
-            <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>#1 app future</Typography>
+            { }
+            <Accordion square expanded={expanded === expandedId} onChange={handleChange(expandedId)}>
+                <AccordionSummary aria-controls={expandedId} id={expandedId}>
+                    <Typography>{name}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem
+                        {descriptions}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+            {/* <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
                     <Typography>#2 security details </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem 
+                        Lorem
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -42,12 +45,12 @@ const Home = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem 
+                        Lorem
                     </Typography>
                 </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
         </div>
     )
 }
 
-export default Home;
+export default IAccordion;
