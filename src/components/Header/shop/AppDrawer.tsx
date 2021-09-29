@@ -91,7 +91,7 @@ export default function AppDrawer() {
                         </ListItem>
                     <Divider />
                         <List>
-                            {[{ name: 'Home Page', link: '/home', icon: <AppsIcon /> },
+                            {[{ name: 'Home Page', link: '/', icon: <AppsIcon /> },
                             { name: 'Shop', link: '/shop', icon: <AddShoppingCartIcon /> },
                                 { name: 'profile', link: '/profile', icon: <AccountBoxIcon /> },
                             ].map((item) => (

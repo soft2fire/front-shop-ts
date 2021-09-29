@@ -64,7 +64,7 @@ const Invoice = () => {
                             }
                         </Grid>
                         <Grid xs={12} md={6} >
-                            <Box boxShadow={5}>
+                            <Box boxShadow={2}>
                                 <Card>
                                     <CardContent >
                                         <CardActions>

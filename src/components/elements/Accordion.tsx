@@ -1,13 +1,12 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-// import { useChangeTheme } from '../reducer/ThemeReducer';
-import useTheme from '@material-ui/core/styles/useTheme';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Accordion, AccordionDetails, AccordionSummary } from './Home.styles';
+import { Accordion, AccordionDetails, AccordionSummary } from './elements.styles';
 
+
+interface accordionProps {
+    name:string,
+}
 const Home = () => {
-    const theme = useTheme();
     // const changeTheme = useChangeTheme();
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
@@ -23,9 +22,7 @@ const Home = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        Lorem
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -35,9 +32,7 @@ const Home = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        Lorem 
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -47,9 +42,7 @@ const Home = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        Lorem 
                     </Typography>
                 </AccordionDetails>
             </Accordion>
