@@ -1,17 +1,7 @@
 import { Box, Typography } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Chats from '../components/Chats/Chats';
 import IAccordion from '../components/elements/Accordion';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            margin: theme.spacing(1),
-        },
-        vpn: {
-            margin: 4,
-        },
-    }),
-);
+import { useStyles } from './Home.styles';
 
 const Home = () => {
     const classes = useStyles()
@@ -38,6 +28,8 @@ const Home = () => {
             <Box color="text.primary">
                 <Typography >Please turn on your vpn :(</Typography>
             </Box>
+            <Chats />
+
             <IAccordion options={Options} />
         </div>
     )

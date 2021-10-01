@@ -74,16 +74,17 @@ const App = () => {
         }
       }, [] as ProductItemType[])
     ));
+    localStorage.setItem('userCartItem', 'cartItems');
   };
   const handleLogout = () => {
     auth.signOut()
-        .then(() => {
-            history.push('/login')
-            localStorage.setItem('userState', 'logout')
-        }
-        )
-        .catch(error => logging.error(error));
-}
+      .then(() => {
+        history.push('/login')
+        localStorage.setItem('userState', 'logout')
+      }
+      )
+      .catch(error => logging.error(error));
+  }
   // if (loading) return <LinearProgress />;
 
   return (
@@ -115,7 +116,8 @@ const App = () => {
 
                     return <route.component  {...routeProps} />;
                   }}
-                />)
+                />
+              )
             }
           </Switch>
         </Router>

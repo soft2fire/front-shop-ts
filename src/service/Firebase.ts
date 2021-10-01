@@ -2,21 +2,23 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-const config = {
-    firebase: {
-        apiKey: "AIzaSyDP0yUmKEAjHRwN6cohjf85FoU-XFzuhj4",
-        authDomain: "shoppingcart-18671.firebaseapp.com",
-        projectId: "shoppingcart-18671",
-        storageBucket: "shoppingcart-18671.appspot.com",
-        messagingSenderId: "725595144796",
-        appId: "1:725595144796:web:c92486b7ede4ab4c315c99"
-    }
-}
+firebase.initializeApp({
+    apiKey: "AIzaSyBZ4Aw_WW5i3_kyVmV6tF8IoUqSX-n5WB4",
+    authDomain: "chat-63325.firebaseapp.com",
+    projectId: "chat-63325",
+    storageBucket: "chat-63325.appspot.com",
+    messagingSenderId: "934657337589",
+    appId: "1:934657337589:web:679d28598ef72588b47dbc",
+    measurementId: "G-W558Z3RX6Y"
+})
 
-const Firebase = firebase.initializeApp(config.firebase);
+// const Firebase = firebase.initializeApp(config.firebase);
 
 export const Providers = {
     google: new firebase.auth.GoogleAuthProvider()
 }
-export const auth = firebase.auth();
-export default Firebase;
+const auth = firebase.auth();
+const db = firebase.firestore();
+console.log(db, 'database');
+
+export { auth, db }

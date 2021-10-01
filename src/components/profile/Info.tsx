@@ -17,10 +17,10 @@ interface UserInfo {
     // phoneNumber?: string | null,
     photoURL?: string | undefined,
     providerId?: string,
-    // uid?: string,
+    uid?: any,
 }
 
-interface User extends UserInfo {
+export interface User extends UserInfo {
     emailVerified: boolean
     providerData: UserInfo[]
 }
@@ -51,14 +51,13 @@ const Info = () => {
     const classes = useStyles();
     const [userDetails] = React.useState(auth.currentUser as User);
     // const { isLoading } = React.useContext(StoreContextProvider);
+
     const [displayFormStatus, setDisplayFormStatus] = React.useState(false);
     const [editMode, setEditMode] = React.useState(false);
     const [formStatus, setFormStatus] = React.useState<FormStatus>({
         message: '',
         type: '',
     })
-
-    console.log(userDetails);
 
     const ChangeInfoRequest = async (data: UserInfo) => {
         auth.currentUser?.updateProfile({ displayName: data.displayName }).then(() => {
