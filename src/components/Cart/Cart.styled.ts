@@ -1,8 +1,12 @@
-import styled from 'styled-components';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-export const Wrapper = styled.aside`
-  font-family: Arial, sans-serif;
-  background:gray;
-  width: 500px;
-  padding: 20px;
-`;
+
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    Wrapper: {
+      backgroundColor: theme.palette.background.paper,
+      width: 500,
+      padding: 8
+    },
+  }),
+);

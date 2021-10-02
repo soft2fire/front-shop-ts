@@ -8,12 +8,13 @@ export const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: theme.palette.background.paper,
             // display: 'flex',
             height: 'auto',
-            width:'100%',
-            paddingTop:4
+            width: '99%',
+            paddingTop: 4,
+            margin: theme.spacing(1)
         },
         tabs: {
             borderRight: `1px solid ${theme.palette.divider}`,
-            minWidth:50
+            minWidth: 50
         },
         backButton: {
             margin: theme.spacing(1),

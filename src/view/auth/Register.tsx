@@ -9,7 +9,6 @@ import { useHistory } from 'react-router'
 import LinkSession from '../../components/elements/LinkSession'
 
 interface SignUpForm {
-    fullName: string
     password: string
     confirmPassword: string
     email: string
@@ -78,7 +77,6 @@ const Register: React.FunctionComponent = () => {
                 <CardContent>
                     <Formik
                         initialValues={{
-                            fullName: '',
                             password: '',
                             confirmPassword: '',
                             email: '',
@@ -93,7 +91,6 @@ const Register: React.FunctionComponent = () => {
 
                         validationSchema={Yup.object().shape({
                             email: Yup.string().email().required('Enter valid email-id'),
-                            fullName: Yup.string().required('Please enter full name'),
                             password: Yup.string().matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}\S$/).required('Required'),
                             confirmPassword: Yup.string().required('Required')
                                 .test(
@@ -112,22 +109,6 @@ const Register: React.FunctionComponent = () => {
                                     <h1 className={classes.title}>Sign up</h1>
                                     <Grid container justify="space-around" direction="row"  >
 
-                                        <Grid item lg={11} md={11} sm={11} xs={11} className={classes.textField} >
-                                            <TextField name="fullName" id="fullNam
-                                            e" label="Full Name" value={values.fullName} variant="filled"
-                                                type="text"
-                                                helperText={errors.fullName && touched.fullName
-                                                    ? errors.fullName
-                                                    : 'Enter your full name.'
-                                                }
-                                                error={errors.fullName && touched.fullName
-                                                    ? true
-                                                    : false
-                                                }
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            />
-                                        </Grid>
                                         <Grid item lg={11} md={11} sm={11} xs={11} className={classes.textField} >
                                             <TextField name="email" id="email" label="Email-id" value={values.email} type="email" variant="filled"
                                                 helperText={errors.email && touched.email ? errors.email : 'Enter email-id'}

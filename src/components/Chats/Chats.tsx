@@ -6,13 +6,16 @@ import firebase from 'firebase/compat/app';
 import { useStyles } from './Chat.styles';
 import { MessageLeft, MessageRight } from './Message';
 import { Button, Card, Paper, TextField } from '@material-ui/core';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import LinkSession from '../elements/LinkSession';
 
 // interface MessagesProps {
-//     text: string,
-//     value: string,
+//     text: string | null,
+//     value: string | null,
 //     uid: string,
-//     photoURL: string
+//     displayName: string,
+//     photoURL: string | null
 // }
 
 const Chats = () => {
@@ -21,17 +24,15 @@ const Chats = () => {
     const [userCheck] = useAuthState(auth)
     const dummy = React.useRef<any>();
     const messagesRef = db.collection('messages');
-    const query = messagesRef.orderBy('createdAt').limit(25);
-
+    const query = messagesRef.orderBy('createdAt', 'asc');
     const [messages] = useCollectionData(query, { idField: 'id' });
-
     const [formValue, setFormValue] = React.useState('');
+
 
     const sendMessage = async (event: any) => {
         event.preventDefault();
 
         const { uid, photoURL, displayName }: any = auth.currentUser;
-        console.log(displayName);
 
         await messagesRef.add({
             text: formValue,
@@ -40,64 +41,69 @@ const Chats = () => {
             photoURL,
             displayName,
         })
+
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     function ChatMessage(props: any) {
-        const { text, uid, photoURL, displayName }: any = props.message;
+        const { text, uid, photoURL, displayName }: any = props.messages;
 
         const messageClass = uid === auth.currentUser?.uid ? 'send' : 'received';
-
         if (messageClass === 'received') {
-            return (<MessageLeft
+            return <MessageLeft
                 message={text}
                 timestamp="MM/DD 00:00"
-                photoURL={photoURL || 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png'}
+                photoURL={photoURL}
                 displayName={displayName}
                 avatarDisp={true}
-            />)
-        }
-        if (messageClass === 'send') {
-            return (<MessageRight
+            />
+        } else {
+            return <MessageRight
                 message={text}
                 timestamp="MM/DD 00:00"
-                photoURL={photoURL || 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png'}
+                photoURL={photoURL}
                 displayName={displayName}
                 avatarDisp={true}
-            />)
+            />
+
         }
-        return <></>
+
     }
 
     return (
         <Card >
-            <div className={classes.container}>
-                <Paper className={classes.paper}>
-                    <Paper id="style-1" className={classes.messagesBody}>
-                        {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-                        <span ref={dummy}></span>
-                    </Paper>
-                    {
-                        userCheck
-                            ? <form onSubmit={sendMessage} className={classes.wrapForm} noValidate autoComplete="off">
-                                <TextField
-                                    id="standard-text"
-                                    label="Say something"
-                                    className={classes.wrapText}
-                                    value={formValue}
-                                    onChange={(e) => setFormValue(e.target.value)}
-                                />
-                                <Button type="submit" disabled={!formValue} variant="contained" color="primary" className={classes.button}>
-                                    <SendIcon />
-                                </Button>
-                            </form>
-
-                            : "You most be login for chat"
-                    }
-
+            <Paper className={classes.paper}>
+                <Paper id="style-1" className={classes.messagesBody}>
+                    {messages && messages.map(msg => <ChatMessage key={msg.id} messages={msg} />)}
+                    <span ref={dummy}></span>
                 </Paper>
-            </div>
+
+
+                <form onSubmit={sendMessage} className={classes.wrapForm} noValidate autoComplete="off">
+                    <TextField
+                        id="standard-text"
+                        label={userCheck ? "say something" : "you most be login for chat"}
+                        className={classes.wrapText}
+                        value={formValue}
+                        onChange={(e) => setFormValue(e.target.value)}
+                        disabled={userCheck ? false : true}
+                    />
+                    <Button type="submit" disabled={!formValue} variant="contained" color="primary" className={classes.button}>
+                        <SendIcon />
+                    </Button>
+                </form>
+
+                {!userCheck && <LinkSession link={'/register'}>
+                    <Button
+                        className={classes.registerLinkButton}
+                        startIcon={<LockOpenIcon />}
+                    >
+                        Haven't account ?
+                    </Button>
+                </LinkSession>}
+
+            </Paper>
         </Card>
     )
 

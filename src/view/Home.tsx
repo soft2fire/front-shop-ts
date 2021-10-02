@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import Chats from '../components/Chats/Chats';
 import IAccordion from '../components/elements/Accordion';
 import { useStyles } from './Home.styles';
@@ -20,17 +20,23 @@ const Home = () => {
             expandedId: "panel3",
             name: "#3 simple shop"
         }
+        , {
+            descriptions: "chat box connected to real time database(firestore) users most be registered for use that and thats have option but not deployed in front-end",
+            expandedId: "panel4",
+            name: "#4 chat box"
+        }
     ]
 
 
     return (
         <div className={classes.root}>
             <Box color="text.primary">
-                <Typography >Please turn on your vpn :(</Typography>
+                <Typography >Please turn on your vpn :( for show data</Typography>
             </Box>
-            <Chats />
-
-            <IAccordion options={Options} />
+            <Grid container direction="row" spacing={1}>
+                <Grid item md={4} sm={12}><Chats /></Grid>
+                <Grid item md={8} sm={12}><IAccordion options={Options} /></Grid>
+            </Grid>
         </div>
     )
 }

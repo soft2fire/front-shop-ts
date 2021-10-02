@@ -1,53 +1,26 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-
-// export const useStyles = makeStyles((theme: Theme) =>
-//     createStyles({
-//         body: {
-//             backgroundColor: theme.palette.background.paper
-//         },
-//         main: {
-//             padding: 8,
-//             height: '80vh',
-//             margin: '10vh 0 10vh',
-//             overflow: 'scroll',
-//             display: 'flex',
-//             flexDirection: 'column'
-//         },
-//         form: {
-//             height: '80vh',
-//             position: 'fixed',
-//             bottom: 0,
-//             backgroundColor: theme.palette.background.default,
-//             width: '100%',
-//             maxWidth: 728,
-//             display: 'flex',
-//         },
-//     }),
-// );
-
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        '@global': {
+            '*::-webkit-scrollbar': {
+                width: 6,
+                cursor: 'pointer'
+            },
+            '*::-webkit-scrollbar-track': {
+                '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00),cursor: pointer'
+            },
+            '*::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.background.default,
+                outline: '1px solid slategrey',
+            }
+        },
         paper: {
-            height: "80vh",
-            maxWidth: "500px",
-            maxHeight: "700px",
             display: "flex",
+            maxHeight: "600px",
             alignItems: "center",
             flexDirection: "column",
-            position: "relative"
-        },
-        paper2: {
-            width: "80vw",
-            maxWidth: "500px",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            position: "relative"
-        },
-        container: {
-            width: "100vw",
-            height: "100vh",
+            position: "relative",
         },
         messagesBody: {
             width: "calc( 100% - 20px )",
@@ -59,13 +32,20 @@ export const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             justifyContent: "center",
             width: "95%",
-            margin: `${theme.spacing(0)} auto`
+            margin: 8
         },
         wrapText: {
             width: "100%"
         },
         button: {
-            //margin: theme.spacing(1),
+            margin: theme.spacing(0),
+        },
+        registerLinkButton: {
+            margin: theme.spacing(1),
+            width: 'fit-content',
+            marginTop: theme.spacing(2.5),
+            fontWeight: 'bold',
+            background: theme.palette.background.default
         },
     })
 );
