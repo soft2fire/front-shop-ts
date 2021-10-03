@@ -25,10 +25,7 @@ export default function AppDrawer({ children }: any) {
     const [open, setOpen] = React.useState(false);
     const changeTheme = useChangeTheme();
     const { cartItems, checkAuthUser, handleLogout } = React.useContext(StoreContextProvider);
-    const [userState, setUserState] = React.useState<string | null>('')
-    React.useEffect(() => {
-        setUserState(localStorage.getItem('userState'))
-    }, [userState])
+
     console.log(checkAuthUser, 'user stage');
 
     const handleDrawerClick = () => {

@@ -16,7 +16,6 @@ import AuthRoute from "./components/AuthRoute";
 import { useHistory } from 'react-router'
 import { useStyles } from './App.styles';
 
-
 const App = () => {
 
   const classes = useStyles();
@@ -37,17 +36,11 @@ const App = () => {
     getProducts
   );
 
-  // const getCartItemFromLocalstorage = localStorage.getItem('userCartItem')
   React.useEffect(() => {
     localStorage.setItem('userCartItem', JSON.stringify(cartItems));
     getProducts();
     setProducts(data as ProductItemType[]);
-    // setCartItems(getCartItemFromLocalstorage)
   }, [data, cartItems, getCartItemFromLocalstorage]);
-
-
-  console.log(cartItems)
-
 
   React.useEffect(() => {
 
@@ -104,11 +97,12 @@ const App = () => {
       }, [] as ProductItemType[])
     ));
   };
+
   const handleLogout = () => {
+    setCartItems([])
     auth.signOut()
       .then(() => {
         history.push('/login')
-        localStorage.setItem('userState', 'logout')
       }
       )
       .catch(error => logging.error(error));
