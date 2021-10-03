@@ -53,14 +53,14 @@ const routes: IRoute[] = [
     },
     {
         path: '/Register',
-        exact: true,
+        exact: false,
         component: Register,
         name: 'Register Page',
         protected: false
     },
     {
         path: '/Login',
-        exact: true,
+        exact: false,
         component: Login,
         name: 'Login Page',
         protected: false

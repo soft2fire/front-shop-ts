@@ -26,9 +26,10 @@ const Chats = () => {
     const dummy = React.useRef<any>();
     const messagesRef = db.collection('messages');
     const query = messagesRef.orderBy('createdAt', 'asc');
-    const [messages] = useCollectionData(query, { idField: 'id' });
+    const [messages] = useCollectionData(query);
     const [formValue, setFormValue] = React.useState('');
 
+    console.log(messagesRef);
 
     const sendMessage = async (event: any) => {
         event.preventDefault();

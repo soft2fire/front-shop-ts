@@ -8,29 +8,49 @@ import { useQuery } from 'react-query'
 import { getProducts } from "./service/api";
 import AppDrawer from "./components/Header/shop/AppDrawer";
 import routes from "./config/routes";
-import { auth } from "./service/Firebase";
+import { auth, db } from "./service/Firebase";
+// import firebase from 'firebase/compat/app';
+// import { useCollectionData } from 'react-firebase-hooks/firestore';
 import logging from "./config/logging";
 import AuthRoute from "./components/AuthRoute";
 import { useHistory } from 'react-router'
 import { useStyles } from './App.styles';
 
+
 const App = () => {
+
   const classes = useStyles();
   const history = useHistory();
+  //firebase 
+  // const cartItemRef = db.collection('cartsItem');
+  // const query = cartItemRef.orderBy('createdAt', 'asc');
+  // const [userCartItem] = useCollectionData(query);
+  // //give user cart item from data base
+  // const cartItem = userCartItem?.filter((item) => item.uid === auth.currentUser?.uid);
+
   const [products, setProducts] = React.useState<ProductItemType[]>([]);
   const [checkAuthUser, setCheckAuthUser] = React.useState<boolean>(true);
-  const [cartItems, setCartItems] = React.useState([] as ProductItemType[]);
+  const getCartItemFromLocalstorage = JSON.parse(localStorage.getItem("userCartItem") || "[]");
+  const [cartItems, setCartItems] = React.useState(getCartItemFromLocalstorage as ProductItemType[]);
   const { data, isLoading, error } = useQuery<ProductItemType[]>(
     'products',
     getProducts
   );
 
+  // const getCartItemFromLocalstorage = localStorage.getItem('userCartItem')
   React.useEffect(() => {
+    localStorage.setItem('userCartItem', JSON.stringify(cartItems));
     getProducts();
     setProducts(data as ProductItemType[]);
-  }, [data]);
+    // setCartItems(getCartItemFromLocalstorage)
+  }, [data, cartItems, getCartItemFromLocalstorage]);
+
+
+  console.log(cartItems)
+
 
   React.useEffect(() => {
+
     auth.onAuthStateChanged(user => {
       if (user) {
         setCheckAuthUser(true)
@@ -43,10 +63,19 @@ const App = () => {
     })
   }, []);
 
+  // const handleAddToCart = async (clickedItem: ProductItemType) => {
+
+  //   const { uid }: any = auth.currentUser;
+  //   await cartItemRef.add({
+  //     productId: clickedItem.id,
+  //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //     uid,
+  //   })
+  // }
+
   function handleAddToCart(clickedItem: ProductItemType) {
     setCartItems(prev => {
       const isExist = prev.find(item => item.id === clickedItem.id);
-
       if (isExist) {
         return prev.map((item) => (
           item.id === clickedItem.id
@@ -74,7 +103,6 @@ const App = () => {
         }
       }, [] as ProductItemType[])
     ));
-    localStorage.setItem('userCartItem', 'cartItems');
   };
   const handleLogout = () => {
     auth.signOut()
@@ -85,7 +113,6 @@ const App = () => {
       )
       .catch(error => logging.error(error));
   }
-  // if (loading) return <LinearProgress />;
 
   return (
     <div className={classes.root}>
