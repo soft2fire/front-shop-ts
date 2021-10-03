@@ -8,7 +8,7 @@ import { useQuery } from 'react-query'
 import { getProducts } from "./service/api";
 import AppDrawer from "./components/Header/shop/AppDrawer";
 import routes from "./config/routes";
-import { auth, db } from "./service/Firebase";
+import { auth } from "./service/Firebase";
 // import firebase from 'firebase/compat/app';
 // import { useCollectionData } from 'react-firebase-hooks/firestore';
 import logging from "./config/logging";
