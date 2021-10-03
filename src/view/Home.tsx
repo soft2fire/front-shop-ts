@@ -27,16 +27,22 @@ const Home = () => {
         }
     ]
 
-
     return (
         <div className={classes.root}>
+
             <Box color="text.primary">
                 <Typography >Please turn on your vpn :( for show data</Typography>
             </Box>
+
             <Grid container direction="row" spacing={1}>
-                <Grid item md={4} sm={12}><Chats /></Grid>
-                <Grid item md={8} sm={12}><IAccordion options={Options} /></Grid>
+                <Grid item md={4} sm={12}>
+                    <Chats />
+                </Grid>
+                <Grid item md={8} sm={12}>
+                    <IAccordion options={Options} />
+                </Grid>
             </Grid>
+
         </div>
     )
 }
