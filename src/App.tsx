@@ -102,24 +102,25 @@ const App = () => {
         handleLogout
       }}>
         <Router>
-          <AppDrawer />
-          <Switch>
-            {
-              routes.map((route, index) =>
-                <Route
-                  key={index}
-                  exact={route.exact}
-                  path={route.path}
-                  render={(routeProps: RouteComponentProps<any>) => {
-                    if (route.protected)
-                      return <AuthRoute><route.component  {...routeProps} /></AuthRoute>;
+          <AppDrawer >
+            <Switch>
+              {
+                routes.map((route, index) =>
+                  <Route
+                    key={index}
+                    exact={route.exact}
+                    path={route.path}
+                    render={(routeProps: RouteComponentProps<any>) => {
+                      if (route.protected)
+                        return <AuthRoute><route.component  {...routeProps} /></AuthRoute>;
 
-                    return <route.component  {...routeProps} />;
-                  }}
-                />
-              )
-            }
-          </Switch>
+                      return <route.component  {...routeProps} />;
+                    }}
+                  />
+                )
+              }
+            </Switch>
+          </AppDrawer>
         </Router>
       </StoreContextProvider.Provider>
     </div>

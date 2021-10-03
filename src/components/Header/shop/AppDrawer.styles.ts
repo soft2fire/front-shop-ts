@@ -1,10 +1,11 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 200;
+const drawerWidth = 240;
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            marginBottom: 64,
+            display: 'flex',
         },
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
@@ -22,17 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
             }),
         },
         menuButton: {
-            marginRight: 30,
-        },
-        bottomItem: {
-            height: '99%',
+            marginRight: 4,
         },
         hide: {
             display: 'none',
-        },
-        link: {
-            textDecoration: "none",
-            color: theme.palette.type
         },
         drawer: {
             width: drawerWidth,
@@ -54,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
             overflowX: 'hidden',
             width: theme.spacing(7) + 1,
             [theme.breakpoints.up('sm')]: {
-                width: theme.spacing(7) + 1,
+                width: theme.spacing(6.5) + 1,
             },
         },
         toolbar: {
@@ -65,8 +59,13 @@ const useStyles = makeStyles((theme: Theme) =>
             // necessary for content to be below app bar
             ...theme.mixins.toolbar,
         },
-
+        content: {
+            flexGrow: 1,
+            padding: theme.spacing(0.2),
+        },
+        bottomItem: {
+            height: '99%',
+        },
     }),
 );
-
-export default useStyles;
+export default useStyles

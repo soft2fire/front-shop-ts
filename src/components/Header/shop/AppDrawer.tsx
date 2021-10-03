@@ -8,18 +8,18 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PaymentIcon from '@material-ui/icons/Payment';
-import AppsIcon from '@material-ui/icons/Apps';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import SpeakerNotesIcon from '@material-ui/icons/SpeakerNotes';
 import { useChangeTheme } from '../../../reducer/ThemeReducer';
 import LinkSession from '../../elements/LinkSession';
 import StoreContextProvider from '../../../reducer/StoreReducer';
 import useStyles from './AppDrawer.styles';
 
-export default function AppDrawer() {
+export default function AppDrawer({ children }: any) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -30,13 +30,11 @@ export default function AppDrawer() {
         setUserState(localStorage.getItem('userState'))
     }, [userState])
     console.log(checkAuthUser, 'user stage');
-    const handleDrawerOpen = () => {
-        setOpen(true);
+
+    const handleDrawerClick = () => {
+        setOpen(!open);
     };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
 
     return (
         <div className={classes.root}>
@@ -51,7 +49,7 @@ export default function AppDrawer() {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
+                        onClick={handleDrawerClick}
                         edge="start"
                         className={clsx(classes.menuButton, {
                             [classes.hide]: open,
@@ -59,7 +57,7 @@ export default function AppDrawer() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    
+
                     <Typography variant="h6" noWrap>My-App</Typography>
                 </Toolbar>
             </AppBar>
@@ -76,7 +74,7 @@ export default function AppDrawer() {
                     }),
                 }} >
                 <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={handleDrawerClick}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>
@@ -89,11 +87,11 @@ export default function AppDrawer() {
                             </ListItemIcon>
                             <ListItemText onClick={() => changeTheme()} primary="Toggle Theme" />
                         </ListItem>
-                    <Divider />
+                        <Divider />
                         <List>
-                            {[{ name: 'Home Page', link: '/', icon: <AppsIcon /> },
+                            {[{ name: 'Home Page', link: '/', icon: <SpeakerNotesIcon /> },
                             { name: 'Shop', link: '/shop', icon: <AddShoppingCartIcon /> },
-                                { name: 'profile', link: '/profile', icon: <AccountBoxIcon /> },
+                            { name: 'profile', link: '/profile', icon: <AccountBoxIcon /> },
                             ].map((item) => (
                                 <LinkSession link={item.link}>
                                     <ListItem button key={item.name}>
@@ -137,6 +135,13 @@ export default function AppDrawer() {
                     </Grid>
                 </Grid>
             </Drawer>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <Typography paragraph>
+                    {children}
+                </Typography>
+            </main>
+
         </div>
     );
 }
