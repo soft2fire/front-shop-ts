@@ -29,44 +29,51 @@ const Chats = () => {
     const [messages] = useCollectionData(query);
     const [formValue, setFormValue] = React.useState('');
 
-    console.log(messagesRef);
+    React.useEffect(() => {
+        if (messages) {
+            setTimeout(() => { dummy.current.scrollIntoView({ behavior: 'smooth' }) }, 500)
+        }
+    }, [messages])
 
     const sendMessage = async (event: any) => {
         event.preventDefault();
 
-        const { uid, photoURL, displayName }: any = auth.currentUser;
+        const { uid, photoURL, displayName, email }: any = auth.currentUser;
 
         await messagesRef.add({
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             uid,
             photoURL,
+            email: email,
             displayName,
         })
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
     }
 
+
     function ChatMessage(props: any) {
 
-        const { text, uid, photoURL, displayName }: any = props.messages;
+        const { text, uid, photoURL, displayName, email, createdAt } = props.messages;
         const messageClass = uid === auth.currentUser?.uid ? 'send' : 'received';
+        const date = new Date(createdAt * 1000).toLocaleDateString()
+        console.log(date);
 
         if (messageClass === 'received') {
             return <MessageLeft
                 message={text}
-                // timestamp="MM/DD 00:00"
+                timestamp={date}
                 photoURL={photoURL}
                 displayName={displayName}
-            // avatarDisp={false}
+                email={email}
             />
         } else {
             return <MessageRight
                 message={text}
-                // timestamp="MM/DD 00:00"
+                timestamp={date}
                 photoURL={photoURL}
                 displayName={displayName}
-            // avatarDisp={true}
             />
         }
     }
@@ -111,7 +118,6 @@ const Chats = () => {
                         </Button>
                     </LinkSession>
                 }
-
             </Paper>
         </Card>
     )

@@ -18,8 +18,8 @@ export const useStyles = makeStyles((theme: Theme) =>
             padding: 8,
             backgroundColor: "#66bcf6",
             width: "60%",
-            minWidth: 40,
-            // height: 50,
+            minWidth: 100,
+            minHeight: 50,
             textAlign: "left",
             border: "1px solid #97C6E3",
             borderRadius: 4,
@@ -85,13 +85,18 @@ export const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
             margin: 0
         },
-        // messageTimeStampRight: {
-        //     position: "absolute",
-        //     fontWeight: "bold",
-        //     marginTop: "10px",
-        //     bottom: "-3px",
-        //     right: "5px"
-        // },
+        messageTimeStampRight: {
+            position: "absolute",
+            marginTop: "10px",
+            bottom: "-3px",
+            right: "5px"
+        },
+        messageTimeStampLeft: {
+            position: "absolute",
+            marginTop: "10px",
+            bottom: "-3px",
+            left: "5px"
+        },
         orange: {
             color: theme.palette.getContrastText(deepOrange[500]),
             backgroundColor: deepOrange[500],

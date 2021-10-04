@@ -37,9 +37,8 @@ const App = () => {
   );
 
   React.useEffect(() => {
-    localStorage.setItem('userCartItem', JSON.stringify(cartItems));
-    getProducts();
     setProducts(data as ProductItemType[]);
+    localStorage.setItem('userCartItem', JSON.stringify(cartItems));
   }, [data, cartItems, getCartItemFromLocalstorage]);
 
   React.useEffect(() => {
