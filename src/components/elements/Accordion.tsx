@@ -17,8 +17,6 @@ const IAccordion = (props: AccordionProps) => {
     const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, newExpanded: boolean) => {
         setExpanded(newExpanded ? panel : false);
     };
-    // console.log(options);
-
     // if (auth.currentUser?.providerData[0]?.providerId !== 'password') return <Redirect to='/login' />
     return (
         <div>

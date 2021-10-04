@@ -19,6 +19,5 @@ export const Providers = {
 }
 const auth = firebase.auth();
 const db = firebase.firestore();
-console.log(db, 'database');
 
 export { auth, db }
